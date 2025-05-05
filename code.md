@@ -1,3 +1,8 @@
+# please removes first line of java code 
+example 
+```java
+package com.example.calculator;
+```
 ># Basic Calculator
 >>```activity_main.xml```
 ``` xml
