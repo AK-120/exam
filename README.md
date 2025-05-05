@@ -3,6 +3,9 @@ example
 ```java
 package com.example.calculator;
 ```
+###### Good Luck
+---
+***
 ># Basic Calculator
 >>```activity_main.xml```
 ``` xml
