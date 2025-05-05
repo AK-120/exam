@@ -253,7 +253,7 @@ public class WelcomeActivity extends AppCompatActivity {
     </activity>
 ```
 ---
-> #Login form using toast
+># Login form using toast
 >> ``activity_main.xml``
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 ---
-> #Digital clock
+># Digital clock
 >>``activity_main.xml``
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 ---
-> #analog clock
+># analog clock
 >>``activity_main.xml``
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -419,6 +419,79 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+}
+```
+---
+># Digital and Analog Clock
+>>``activity_main.xml``
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <AnalogClock
+        android:id="@+id/analogClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"/>
+
+    <TextView
+        android:id="@+id/digitalClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00:00"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+</LinearLayout>
+```
+>>``MainActivity.java``
+```java
+package com.example.clockapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.os.Handler;
+import android.widget.TextView;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView digitalClock;
+    Handler handler = new Handler();
+    Runnable updateClock;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        digitalClock = findViewById(R.id.digitalClock);
+
+        updateClock = new Runnable() {
+            @Override
+            public void run() {
+                String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                digitalClock.setText(currentTime);
+                handler.postDelayed(this, 1000);
+            }
+        };
+
+        handler.post(updateClock);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(updateClock); // Clean up handler
     }
 }
 ```
